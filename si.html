@@ -13,24 +13,71 @@
         color: red;
         margin-top: 30px;
     }
-    img {
-        width: 200px;
-        margin: 15px;
+    .carrusel {
+        position: relative;
+        max-width: 500px;
+        margin: auto;
+        overflow: hidden;
         border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
+    .carrusel img {
+        width: 100%;
+        display: none;
+    }
+    .carrusel img.active {
+        display: block;
+    }
+    .boton {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        border-radius: 50%;
+        font-size: 18px;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
 </style>
 </head>
 <body>
     <h1>💖 Gracias por amarme 💖</h1>
     <p>Aquí están nuestras fotos:</p>
 
-    <!-- Puedes agregar todas las fotos que quieras -->
-    <img src="foto1.jpg" alt="Foto 1">
-    <img src="foto2.jpg" alt="Foto 2">
-    <img src="foto3.jpg" alt="Foto 3">
+    <div class="carrusel">
+        <img src="foto1.jpg" class="active" alt="Foto 1">
+        <img src="foto2.jpg" alt="Foto 2">
+        <img src="foto3.jpg" alt="Foto 3">
 
-    <br><br>
+        <button class="boton prev" onclick="cambiarFoto(-1)">❮</button>
+        <button class="boton next" onclick="cambiarFoto(1)">❯</button>
+    </div>
+
+    <br>
     <a href="index.html">⬅ Volver</a>
+
+    <script>
+        let indice = 0;
+        const fotos = document.querySelectorAll(".carrusel img");
+
+        function mostrarFoto(n) {
+            fotos.forEach(f => f.classList.remove("active"));
+            indice = (n + fotos.length) % fotos.length;
+            fotos[indice].classList.add("active");
+        }
+
+        function cambiarFoto(n) {
+            mostrarFoto(indice + n);
+        }
+
+        // Carrusel automático cada 3 segundos
+        setInterval(() => {
+            cambiarFoto(1);
+        }, 3000);
+    </script>
 </body>
 </html>
